@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Putting It Together</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/home">Putting It Together</a>
+            <div class="navbar-nav">
+                <a class="nav-link" href="/api/v1/addresses">API</a>
+                <a class="nav-link" href="/h2-console" target="_blank">H2 Console</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12">
+                <h1>Welcome to Putting It Together</h1>
+                <p class="lead">A comprehensive Address, Person, and Employer management system</p>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Addresses</h5>
+                        <p class="card-text">Manage comprehensive address information with street, number, zip code, city, province, and country.</p>
+                        <p class="text-muted">Current count: <span th:text="${addressCount}">0</span></p>
+                        <a href="/api/v1/addresses" class="btn btn-primary">View API</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Persons</h5>
+                        <p class="card-text">Manage person information including name, date of birth, gender, and relationships to addresses and employers.</p>
+                        <a href="/api/v1/persons" class="btn btn-primary">View API</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Employers</h5>
+                        <p class="card-text">Manage employer information including name, industry, website, email, and phone.</p>
+                        <a href="/api/v1/employers" class="btn btn-primary">View API</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12">
+                <h3>API Endpoints</h3>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>Endpoint</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="badge bg-success">GET</span></td>
+                                <td>/api/v1/addresses</td>
+                                <td>Get all addresses</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge bg-success">GET</span></td>
+                                <td>/api/v1/addresses/{id}</td>
+                                <td>Get address by ID</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge bg-primary">POST</span></td>
+                                <td>/api/v1/addresses</td>
+                                <td>Create new address</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge bg-warning">PUT</span></td>
+                                <td>/api/v1/addresses/{id}</td>
+                                <td>Update address</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge bg-danger">DELETE</span></td>
+                                <td>/api/v1/addresses/{id}</td>
+                                <td>Delete address</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge bg-success">GET</span></td>
+                                <td>/api/v1/addresses/search?term=...</td>
+                                <td>Search addresses</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
