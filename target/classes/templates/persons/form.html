@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${person.id == null ? 'Add New Person' : 'Edit Person'} + ' - Putting It Together'">Person Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/home">Putting It Together</a>
+            <div class="navbar-nav">
+                <a class="nav-link" href="/addresses">Addresses</a>
+                <a class="nav-link" href="/persons">Persons</a>
+                <a class="nav-link" href="/employers">Employers</a>
+                <a class="nav-link" href="/h2-console" target="_blank">H2 Console</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 th:text="${person.id == null ? 'Add New Person' : 'Edit Person'}">Person Form</h3>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/persons}" th:object="${person}" method="post">
+                            <input type="hidden" th:field="*{id}">
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="firstName" class="form-label">First Name *</label>
+                                    <input type="text" class="form-control" id="firstName" th:field="*{firstName}" 
+                                           placeholder="Enter first name" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="lastName" class="form-label">Last Name *</label>
+                                    <input type="text" class="form-control" id="lastName" th:field="*{lastName}" 
+                                           placeholder="Enter last name" required>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="dateOfBirth" class="form-label">Date of Birth</label>
+                                    <input type="date" class="form-control" id="dateOfBirth" th:field="*{dateOfBirth}">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="gender" class="form-label">Gender</label>
+                                    <select class="form-select" id="gender" th:field="*{gender}">
+                                        <option value="">Select Gender</option>
+                                        <option th:each="genderOption : ${genders}" 
+                                                th:value="${genderOption}" 
+                                                th:text="${genderOption}"></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="addressId" class="form-label">Address</label>
+                                    <select class="form-select" id="addressId" th:field="*{addressId}">
+                                        <option value="">Select Address</option>
+                                        <option th:each="address : ${addresses}" 
+                                                th:value="${address.id}" 
+                                                th:text="${address.formattedAddress}"></option>
+                                    </select>
+                                    <div class="form-text">
+                                        <a href="/addresses/new" target="_blank">Create new address</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="employerId" class="form-label">Employer</label>
+                                    <select class="form-select" id="employerId" th:field="*{employerId}">
+                                        <option value="">Select Employer</option>
+                                        <option th:each="employer : ${employers}" 
+                                                th:value="${employer.id}" 
+                                                th:text="${employer.name}"></option>
+                                    </select>
+                                    <div class="form-text">
+                                        <a href="/employers/new" target="_blank">Create new employer</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Preview:</label>
+                                <div class="p-3 bg-light rounded">
+                                    <div id="preview">
+                                        <strong id="preview-name">Name will appear here</strong><br>
+                                        <small class="text-muted">
+                                            <span id="preview-details">Person details will appear here as you fill the form</span>
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <a href="/persons" class="btn btn-secondary">Cancel</a>
+                                <button type="submit" class="btn btn-primary" 
+                                        th:text="${person.id == null ? 'Create Person' : 'Update Person'}">
+                                    Save Person
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Person preview functionality
+        function updatePreview() {
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const dateOfBirth = document.getElementById('dateOfBirth').value;
+            const gender = document.getElementById('gender').value;
+            const addressId = document.getElementById('addressId').value;
+            const employerId = document.getElementById('employerId').value;
+            
+            // Update name
+            const namePreview = (firstName || lastName) ? 
+                `${firstName || ''} ${lastName || ''}`.trim() : 'Name will appear here';
+            document.getElementById('preview-name').textContent = namePreview;
+            
+            // Update details
+            let details = [];
+            if (dateOfBirth) {
+                const birthDate = new Date(dateOfBirth);
+                const age = new Date().getFullYear() - birthDate.getFullYear();
+                details.push(`Born ${dateOfBirth} (Age: ${age})`);
+            }
+            if (gender) details.push(`Gender: ${gender}`);
+            if (addressId) details.push(`Has address selected`);
+            if (employerId) details.push(`Has employer selected`);
+            
+            document.getElementById('preview-details').textContent = 
+                details.length > 0 ? details.join(' • ') : 'Person details will appear here as you fill the form';
+        }
+        
+        // Add event listeners to all form inputs
+        ['firstName', 'lastName', 'dateOfBirth', 'gender', 'addressId', 'employerId'].forEach(id => {
+            document.getElementById(id).addEventListener('input', updatePreview);
+            document.getElementById(id).addEventListener('change', updatePreview);
+        });
+        
+        // Initialize preview on page load
+        updatePreview();
+    </script>
+</body>
+</html>

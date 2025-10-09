@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${employer.id == null ? 'Add New Employer' : 'Edit Employer'} + ' - Putting It Together'">Employer Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/home">Putting It Together</a>
+            <div class="navbar-nav">
+                <a class="nav-link" href="/addresses">Addresses</a>
+                <a class="nav-link" href="/persons">Persons</a>
+                <a class="nav-link" href="/employers">Employers</a>
+                <a class="nav-link" href="/h2-console" target="_blank">H2 Console</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 th:text="${employer.id == null ? 'Add New Employer' : 'Edit Employer'}">Employer Form</h3>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/employers}" th:object="${employer}" method="post">
+                            <input type="hidden" th:field="*{id}">
+                            
+                            <div class="row">
+                                <div class="col-md-8 mb-3">
+                                    <label for="name" class="form-label">Company Name *</label>
+                                    <input type="text" class="form-control" id="name" th:field="*{name}" 
+                                           placeholder="Enter company name" required>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <label for="industry" class="form-label">Industry</label>
+                                    <input type="text" class="form-control" id="industry" th:field="*{industry}" 
+                                           placeholder="e.g., Technology">
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="website" class="form-label">Website</label>
+                                <input type="url" class="form-control" id="website" th:field="*{website}" 
+                                       placeholder="https://www.example.com">
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="email" th:field="*{email}" 
+                                           placeholder="contact@company.com">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="phone" class="form-label">Phone</label>
+                                    <input type="tel" class="form-control" id="phone" th:field="*{phone}" 
+                                           placeholder="+32 2 123 45 67">
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Preview:</label>
+                                <div class="p-3 bg-light rounded">
+                                    <div id="preview">
+                                        <h5 id="preview-name">Company Name</h5>
+                                        <div id="preview-details" class="text-muted">
+                                            <div id="preview-industry"></div>
+                                            <div id="preview-contacts"></div>
+                                            <div id="preview-website"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between">
+                                <a href="/employers" class="btn btn-secondary">Cancel</a>
+                                <button type="submit" class="btn btn-primary" 
+                                        th:text="${employer.id == null ? 'Create Employer' : 'Update Employer'}">
+                                    Save Employer
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Employer preview functionality
+        function updatePreview() {
+            const name = document.getElementById('name').value;
+            const industry = document.getElementById('industry').value;
+            const website = document.getElementById('website').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            
+            // Update company name
+            document.getElementById('preview-name').textContent = name || 'Company Name';
+            
+            // Update industry
+            document.getElementById('preview-industry').innerHTML = industry ? 
+                `<span class="badge bg-info">${industry}</span>` : '';
+            
+            // Update contacts
+            let contacts = [];
+            if (email) contacts.push(`<a href="mailto:${email}" class="text-decoration-none">${email}</a>`);
+            if (phone) contacts.push(`<a href="tel:${phone}" class="text-decoration-none">${phone}</a>`);
+            document.getElementById('preview-contacts').innerHTML = contacts.length > 0 ? 
+                contacts.join(' • ') : '';
+            
+            // Update website
+            document.getElementById('preview-website').innerHTML = website ? 
+                `<a href="${website}" target="_blank" class="text-decoration-none">${website}</a>` : '';
+        }
+        
+        // Add event listeners to all form inputs
+        ['name', 'industry', 'website', 'email', 'phone'].forEach(id => {
+            document.getElementById(id).addEventListener('input', updatePreview);
+        });
+        
+        // Initialize preview on page load
+        updatePreview();
+    </script>
+</body>
+</html>

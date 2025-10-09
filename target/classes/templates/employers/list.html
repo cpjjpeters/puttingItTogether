@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employer Management - Putting It Together</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/home">Putting It Together</a>
+            <div class="navbar-nav">
+                <a class="nav-link" href="/addresses">Addresses</a>
+                <a class="nav-link" href="/persons">Persons</a>
+                <a class="nav-link" href="/employers">Employers</a>
+                <a class="nav-link" href="/h2-console" target="_blank">H2 Console</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Employer Management</h1>
+            <a href="/employers/new" class="btn btn-primary">
+                <i class="bi bi-plus"></i> Add New Employer
+            </a>
+        </div>
+
+        <!-- Alert Messages -->
+        <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <span th:text="${success}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <span th:text="${error}"></span>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
+        <!-- Search Form -->
+        <div class="row mb-4">
+            <div class="col-md-8">
+                <form th:action="@{/employers/search}" method="get" class="d-flex">
+                    <select class="form-select" name="type" style="width: auto;">
+                        <option value="">Company Name</option>
+                        <option value="industry" th:selected="${searchType == 'industry'}">Industry</option>
+                    </select>
+                    <input type="text" class="form-control ms-2" name="term" placeholder="Search employers..." 
+                           th:value="${searchTerm}">
+                    <button class="btn btn-outline-secondary ms-2" type="submit">Search</button>
+                    <a href="/employers" class="btn btn-outline-secondary ms-2" th:if="${searchTerm}">Clear</a>
+                </form>
+            </div>
+        </div>
+
+        <!-- Employers Table -->
+        <div class="card">
+            <div class="card-body">
+                <div th:if="${employers.empty}" class="text-center py-5">
+                    <h4>No employers found</h4>
+                    <p class="text-muted">Start by adding your first employer!</p>
+                    <a href="/employers/new" class="btn btn-primary">Add Employer</a>
+                </div>
+                
+                <div th:if="${!employers.empty}">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Company Name</th>
+                                    <th>Industry</th>
+                                    <th>Website</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="employer : ${employers}">
+                                    <td th:text="${employer.id}"></td>
+                                    <td>
+                                        <strong th:text="${employer.name}"></strong>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-info" th:text="${employer.industry ?: '-'}"></span>
+                                    </td>
+                                    <td>
+                                        <a th:if="${employer.website}" 
+                                           th:href="${employer.website}" 
+                                           target="_blank" 
+                                           class="text-decoration-none">
+                                            <small th:text="${employer.website}"></small>
+                                        </a>
+                                        <span th:if="${!employer.website}">-</span>
+                                    </td>
+                                    <td>
+                                        <a th:if="${employer.email}" 
+                                           th:href="'mailto:' + ${employer.email}" 
+                                           class="text-decoration-none">
+                                            <small th:text="${employer.email}"></small>
+                                        </a>
+                                        <span th:if="${!employer.email}">-</span>
+                                    </td>
+                                    <td>
+                                        <a th:if="${employer.phone}" 
+                                           th:href="'tel:' + ${employer.phone}" 
+                                           class="text-decoration-none">
+                                            <small th:text="${employer.phone}"></small>
+                                        </a>
+                                        <span th:if="${!employer.phone}">-</span>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <a th:href="@{/employers/{id}(id=${employer.id})}" 
+                                               class="btn btn-sm btn-outline-primary">View</a>
+                                            <a th:href="@{/employers/{id}/edit(id=${employer.id})}" 
+                                               class="btn btn-sm btn-outline-secondary">Edit</a>
+                                            <form th:action="@{/employers/{id}/delete(id=${employer.id})}" 
+                                                  method="post" style="display: inline;"
+                                                  onsubmit="return confirm('Are you sure you want to delete this employer?')">
+                                                <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <small class="text-muted">Total employers: <span th:text="${employers.size()}"></span></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

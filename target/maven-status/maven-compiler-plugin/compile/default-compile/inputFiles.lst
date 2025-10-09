@@ -8,8 +8,12 @@
 /Users/carlpeters/IdeaProjects/puttingItTogether/src/main/java/be/ipeters/puttingittogether/address/service/AddressService.java
 /Users/carlpeters/IdeaProjects/puttingItTogether/src/main/java/be/ipeters/puttingittogether/config/WebConfiguration.java
 /Users/carlpeters/IdeaProjects/puttingItTogether/src/main/java/be/ipeters/puttingittogether/employer/jpa/entity/EmployerJpaEntity.java
+/Users/carlpeters/IdeaProjects/puttingItTogether/src/main/java/be/ipeters/puttingittogether/employer/jpa/mapper/EmployerJpaDaoMapper.java
 /Users/carlpeters/IdeaProjects/puttingItTogether/src/main/java/be/ipeters/puttingittogether/employer/jpa/repository/EmployerJpaRepository.java
 /Users/carlpeters/IdeaProjects/puttingItTogether/src/main/java/be/ipeters/puttingittogether/employer/model/Employer.java
+/Users/carlpeters/IdeaProjects/puttingItTogether/src/main/java/be/ipeters/puttingittogether/employer/persistence/EmployerPersistenceFacade.java
+/Users/carlpeters/IdeaProjects/puttingItTogether/src/main/java/be/ipeters/puttingittogether/employer/service/EmployerJpaPersistenceService.java
+/Users/carlpeters/IdeaProjects/puttingItTogether/src/main/java/be/ipeters/puttingittogether/employer/service/EmployerService.java
 /Users/carlpeters/IdeaProjects/puttingItTogether/src/main/java/be/ipeters/puttingittogether/person/jpa/entity/PersonJpaEntity.java
 /Users/carlpeters/IdeaProjects/puttingItTogether/src/main/java/be/ipeters/puttingittogether/person/jpa/mapper/PersonJpaDaoMapper.java
 /Users/carlpeters/IdeaProjects/puttingItTogether/src/main/java/be/ipeters/puttingittogether/person/jpa/repository/PersonJpaRepository.java
@@ -17,5 +21,11 @@
 /Users/carlpeters/IdeaProjects/puttingItTogether/src/main/java/be/ipeters/puttingittogether/person/model/Person.java
 /Users/carlpeters/IdeaProjects/puttingItTogether/src/main/java/be/ipeters/puttingittogether/person/persistence/PersonPersistenceFacade.java
 /Users/carlpeters/IdeaProjects/puttingItTogether/src/main/java/be/ipeters/puttingittogether/person/service/PersonJpaPersistenceService.java
+/Users/carlpeters/IdeaProjects/puttingItTogether/src/main/java/be/ipeters/puttingittogether/person/service/PersonService.java
 /Users/carlpeters/IdeaProjects/puttingItTogether/src/main/java/be/ipeters/puttingittogether/web/api/v1/AddressController.java
+/Users/carlpeters/IdeaProjects/puttingItTogether/src/main/java/be/ipeters/puttingittogether/web/api/v1/EmployerController.java
+/Users/carlpeters/IdeaProjects/puttingItTogether/src/main/java/be/ipeters/puttingittogether/web/api/v1/PersonController.java
+/Users/carlpeters/IdeaProjects/puttingItTogether/src/main/java/be/ipeters/puttingittogether/web/mvc/AddressMvcController.java
+/Users/carlpeters/IdeaProjects/puttingItTogether/src/main/java/be/ipeters/puttingittogether/web/mvc/EmployerMvcController.java
 /Users/carlpeters/IdeaProjects/puttingItTogether/src/main/java/be/ipeters/puttingittogether/web/mvc/HomeController.java
+/Users/carlpeters/IdeaProjects/puttingItTogether/src/main/java/be/ipeters/puttingittogether/web/mvc/PersonMvcController.java

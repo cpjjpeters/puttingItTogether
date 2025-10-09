@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -11,7 +12,9 @@
         <div class="container">
             <a class="navbar-brand" href="/home">Putting It Together</a>
             <div class="navbar-nav">
-                <a class="nav-link" href="/api/v1/addresses">API</a>
+                <a class="nav-link" href="/addresses">Addresses</a>
+                <a class="nav-link" href="/persons">Persons</a>
+                <a class="nav-link" href="/employers">Employers</a>
                 <a class="nav-link" href="/h2-console" target="_blank">H2 Console</a>
             </div>
         </div>
@@ -32,25 +35,30 @@
                         <h5 class="card-title">Addresses</h5>
                         <p class="card-text">Manage comprehensive address information with street, number, zip code, city, province, and country.</p>
                         <p class="text-muted">Current count: <span th:text="${addressCount}">0</span></p>
-                        <a href="/api/v1/addresses" class="btn btn-primary">View API</a>
+                        <a href="/addresses" class="btn btn-primary">Manage Addresses</a>
+                        <a href="/api/v1/addresses" class="btn btn-outline-secondary">API</a>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Persons</h5>
-                        <p class="card-text">Manage person information including name, date of birth, gender, and relationships to addresses and employers.</p>
-                        <a href="/api/v1/persons" class="btn btn-primary">View API</a>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Persons</h5>
+                            <p class="card-text">Manage person information including name, date of birth, gender, and relationships to addresses and employers.</p>
+                            <p class="text-muted">Current count: <span th:text="${personCount}">0</span></p>
+                            <a href="/persons" class="btn btn-primary">Manage Persons</a>
+                            <a href="/api/v1/persons" class="btn btn-outline-secondary">API</a>
+                        </div>
                     </div>
-                </div>
             </div>
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Employers</h5>
                         <p class="card-text">Manage employer information including name, industry, website, email, and phone.</p>
-                        <a href="/api/v1/employers" class="btn btn-primary">View API</a>
+                        <p class="text-muted">Current count: <span th:text="${employerCount}">0</span></p>
+                        <a href="/employers" class="btn btn-primary">Manage Employers</a>
+                        <a href="/api/v1/employers" class="btn btn-outline-secondary">API</a>
                     </div>
                 </div>
             </div>
