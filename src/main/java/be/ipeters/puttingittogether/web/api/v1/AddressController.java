@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/addresses")
-@CrossOrigin(origins = "*")
+@CrossOrigin(originPatterns = "*")
 public class AddressController {
 
     private final AddressService addressService;
